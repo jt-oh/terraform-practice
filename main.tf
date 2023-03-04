@@ -19,11 +19,16 @@ provider "aws" {
 }
 
 resource "aws_instance" "aws_instance_test" {
-  ami           = "ami-06ee4e2261a4dc5c3"
+  ami           = data.aws_ami.amazon_linux_2_ami.image_id
   instance_type = "t2.micro"
   tags = {
     Name = "terraform_created_instance"
   }
 }
 
-
+data "aws_ami" "amazon_linux_2_ami" {
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20230221.0-x86_64-gp2"]
+  }
+}
